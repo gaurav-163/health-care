@@ -70,10 +70,14 @@ export function useSpeechRecognition({
             console.log('Using Deepgram model:', model || 'nova-2');
             const dgLanguage = getDeepgramLanguage(language);
 
-            // Create WebSocket connection to Deepgram
-            // Note: We don't specify sample_rate - Deepgram will auto-detect from audio
+            // Create AudioContext first to get the actual sample rate
+            const audioContext = new AudioContext();
+            const actualSampleRate = audioContext.sampleRate;
+            console.log('Audio sample rate:', actualSampleRate);
+
+            // Create WebSocket connection to Deepgram with correct sample rate
             const socket = new WebSocket(
-                `${wsUrl}&language=${dgLanguage}&interim_results=true&encoding=linear16&vad_events=true&utterance_end_ms=1000`,
+                `${wsUrl}&language=${dgLanguage}&interim_results=true&encoding=linear16&sample_rate=${actualSampleRate}&channels=1`,
                 ['token', apiKey]
             );
 
@@ -81,6 +85,7 @@ export function useSpeechRecognition({
                 const timeout = setTimeout(() => {
                     console.warn('Deepgram connection timeout');
                     socket.close();
+                    audioContext.close();
                     resolve(false);
                 }, 5000);
 
@@ -90,15 +95,10 @@ export function useSpeechRecognition({
                     socketRef.current = socket;
                     setProvider('deepgram');
 
-                    // Create AudioContext - use default sample rate (matches microphone)
-                    const audioContext = new AudioContext();
-                    const actualSampleRate = audioContext.sampleRate;
-                    console.log('Audio sample rate:', actualSampleRate);
-
                     const source = audioContext.createMediaStreamSource(stream);
 
-                    // Use smaller buffer for more responsive transcription
-                    const processor = audioContext.createScriptProcessor(2048, 1, 1);
+                    // Use buffer for audio processing
+                    const processor = audioContext.createScriptProcessor(4096, 1, 1);
 
                     source.connect(processor);
                     processor.connect(audioContext.destination);
@@ -137,6 +137,9 @@ export function useSpeechRecognition({
                 socket.onmessage = (event) => {
                     try {
                         const data = JSON.parse(event.data);
+
+                        // Debug: log all messages from Deepgram
+                        console.log('Deepgram message:', data.type || 'transcript', data);
 
                         // Handle speech started event
                         if (data.type === 'SpeechStarted') {
