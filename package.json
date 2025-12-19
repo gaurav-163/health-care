@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@deepgram/sdk": "^4.11.3",
+    "assemblyai": "^4.22.1",
+    "cohere-ai": "^7.20.0",
     "next": "16.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"

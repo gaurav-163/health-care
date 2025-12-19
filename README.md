@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MediTranslate - Healthcare Translation App (Next.js + Cohere)
 
-## Getting Started
+A real-time, multilingual translation application designed for seamless communication between healthcare providers and patients. Built with Next.js and Cohere AI.
 
-First, run the development server:
+![MediTranslate](https://img.shields.io/badge/MediTranslate-Healthcare%20Translation-blue)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![Cohere](https://img.shields.io/badge/Cohere-AI-purple)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌟 Features
+
+### Core Functionality
+- **🎤 Voice-to-Text**: Robust speech recognition with multiple providers:
+  - **Deepgram** (Primary) - Real-time streaming transcription
+  - **AssemblyAI** (Fallback) - High-accuracy batch transcription
+  - **Web Speech API** (Last resort) - Browser-native fallback
+- **🌍 Real-Time Translation**: Instant translation powered by Cohere AI
+- **🔊 Text-to-Speech**: Browser-based audio playback
+- **📱 Mobile-First Design**: Responsive UI with glassmorphism
+
+### Healthcare-Specific
+- **🏥 Medical Terminology Support**: Enhanced accuracy for medical terms
+- **🔒 Privacy-Focused**: No data persistence
+- **⚡ Real-time Processing**: Instant translations
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- [Cohere API Key](https://dashboard.cohere.com/api-keys) (Free tier available!)
+- [Deepgram API Key](https://console.deepgram.com/) (Free tier available!) - For real-time speech recognition
+- [AssemblyAI API Key](https://www.assemblyai.com/app/) (Free tier available!) - For fallback speech recognition
+
+### Installation
+
+1. **Navigate to the project**:
+   ```bash
+   cd meditranslate-nextjs
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment**:
+   ```bash
+   # Edit .env.local and add your API keys
+   COHERE_API_KEY=your_cohere_api_key_here
+   DEEPGRAM_API_KEY=your_deepgram_api_key_here
+   ASSEMBLYAI_API_KEY=your_assemblyai_api_key_here
+   ```
+
+4. **Start development server**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**:
+   ```
+   http://localhost:3000
+   ```
+
+## 🔑 Getting a Cohere API Key
+
+1. Go to [Cohere Dashboard](https://dashboard.cohere.com/)
+2. Sign up or log in
+3. Navigate to API Keys
+4. Create a new key (free tier includes generous limits!)
+5. Add it to your `.env.local` file
+
+## 📖 Usage
+
+### Voice Recording
+1. Select your input language ("I speak")
+2. Select target language ("Translate to")
+3. Click the microphone button
+4. Speak clearly
+5. Translation appears in real-time
+
+### Text Input
+1. Type or paste text in the input box
+2. Click "Translate" or press Enter
+3. View translation with audio playback option
+
+## 🛠️ Technology Stack
+
+| Component | Technology |
+|-----------|------------|
+| Framework | Next.js 15 (App Router) |
+| UI | Tailwind CSS, Glassmorphism |
+| Translation | Cohere AI (command-r-plus) |
+| Speech-to-Text | Web Speech API |
+| Text-to-Speech | Browser SpeechSynthesis |
+| Language | TypeScript |
+
+## 📁 Project Structure
+
+```
+meditranslate-nextjs/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── translate/
+│   │   │       └── route.ts    # Cohere translation API
+│   │   ├── globals.css         # Custom styles
+│   │   ├── layout.tsx          # Root layout
+│   │   └── page.tsx            # Main app component
+│   └── types/
+│       └── speech.d.ts         # Web Speech API types
+├── .env.local                  # API keys (create this!)
+├── package.json
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Supported Languages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+English, Spanish, French, German, Chinese, Hindi, Arabic, Portuguese, Russian, Japanese, Korean, Vietnamese
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Deployment
 
-## Learn More
+### Deploy to Vercel (Recommended)
 
-To learn more about Next.js, take a look at the following resources:
+1. **Push to GitHub**:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/your-username/meditranslate.git
+   git push -u origin main
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Deploy via Vercel Dashboard**:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Import Project"
+   - Select your GitHub repository
+   - Add the following environment variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   | Variable | Description |
+   |----------|-------------|
+   | `COHERE_API_KEY` | Your Cohere API key for translation |
+   | `DEEPGRAM_API_KEY` | Your Deepgram API key for speech recognition & TTS |
+   | `ASSEMBLYAI_API_KEY` | (Optional) AssemblyAI key for fallback |
 
-## Deploy on Vercel
+3. **Click Deploy!**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Deploy via CLI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Build the project
+npm run build
+
+# Deploy
+vercel
+
+# For production deployment
+vercel --prod
+```
+
+### Environment Variables on Vercel
+
+After deployment, go to your project settings on Vercel:
+1. Navigate to **Settings** → **Environment Variables**
+2. Add each API key:
+   - `COHERE_API_KEY` - Required for translation
+   - `DEEPGRAM_API_KEY` - Required for speech recognition and TTS
+   - `ASSEMBLYAI_API_KEY` - Optional fallback
+
+## 📝 License
+
+MIT License
+
+---
+
+Built with ❤️ for better healthcare communication
