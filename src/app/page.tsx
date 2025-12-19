@@ -626,7 +626,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="glass mt-auto px-4 py-4 text-center">
           <p className="text-sm text-gray-500">
-            Built with ❤️ using Cohere AI |
+            Built by <span className="text-teal-400 font-semibold">Gaurav</span> |
             <span className="text-gray-400"> Healthcare Translation Made Simple</span>
           </p>
         </footer>
