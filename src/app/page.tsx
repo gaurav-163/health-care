@@ -326,7 +326,7 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold gradient-text">MediTranslate</h1>
+                <h1 className="text-xl sm:text-2xl font-bold gradient-text">Health</h1>
                 <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">Healthcare Translation</p>
               </div>
             </div>
