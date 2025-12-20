@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MediTranslate - Healthcare Translation App",
+  title: "HealthCare -A Healthcare Translation App",
   description: "Real-time healthcare translation app for seamless communication between patients and healthcare providers across multiple languages.",
 };
 
